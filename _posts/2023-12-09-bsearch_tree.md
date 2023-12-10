@@ -5,7 +5,7 @@ However, why it’s called `Tree`?
 It’s literally looking tree, but up-side down one.
 Let’s imagine how `Tree` looks like.
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231118232741.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231118232741.png)
 
 Fig.1 Nature of Tree
 
@@ -13,7 +13,7 @@ There’s root at the bottom, and multiple braches with leaves at the top.
 
 if we make a tree with nodes, this is how we can map with.
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231118233400.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231118233400.png)
 
 Fig.2 Real tree vs the `tree` data structure in computer science
 
@@ -36,7 +36,7 @@ Path from the node to the another one is only one.
 Otherwise, it’s called `graph`.
 Starting from the `root`, all nodes should be connected, but has only one path from the one to the others.
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204120013.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204120013.png)
 
 
 ## 1.3 Implementation
@@ -101,7 +101,7 @@ Let’s go through the first requirement.
 This requirement is quite simple and straightforward.
 We can just create new node and make `root`pointer points `new node` if it’s `NULL`
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204124311.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204124311.png)
 
 
 ```c
@@ -184,13 +184,13 @@ Let’s revise the requirement to make it clear.
 we can simply describe how the written code works.
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204135940.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204135940.png)
 
 
 Alright, it’s time to test. if we implement the code correctly, below tree can be made with the code in the main function below.
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204142219.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204142219.png)
 
 
 ```c
@@ -219,7 +219,7 @@ Tree has uni-direction structure, which means parent node only can access childr
 You can easily understand what it means as our `Node` has no `Node *parent`.
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204144210.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204144210.png)
 
 
 Then, how can we traverse the tree?
@@ -234,7 +234,7 @@ Let’s take a look at the three way to traverse the tree below.
  `Pre order traverse` is the strategy to traverse the tree *root -> left -> right order*.
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204145524.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204145524.png)
 
 
 
@@ -268,7 +268,7 @@ Let’s quickly go over the code line by line,
  `In order traverse` is the strategy to traverse the tree *left -> root -> right order*.
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204145647.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204145647.png)
 
 
 
@@ -292,7 +292,7 @@ void in_order_traverse(Node *node) {
  `Post order traverse` is the strategy to traverse the tree from *left -> right -> root order*.
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204145746.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204145746.png)
 
 
 
@@ -378,7 +378,7 @@ Yes, It’s completely same shape of tree, but there is important rule to make i
 Here is difference between `just binary tree` versus `binary search tree` what we are going to talk.
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204161722.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204161722.png)
 
 
 Can you easily distinguish what the difference is?
@@ -394,14 +394,14 @@ Binary Search Tree also has quite simple and straightforward rule.
 * Otherwise, it should be assigned on its right side. (if `newNode`’s data is bigger than parent) ``
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204163153.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204163153.png)
 
 
 
 With above rule, values in tree can be stored in the tree like below.
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204163600.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204163600.png)
 
 
 
@@ -410,19 +410,19 @@ Let’s see how it works step by step.
 1. If tree is empty, data will be linked with root as normal binary tree was in previous section
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204164505.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204164505.png)
 
 
 2. if new data is smaller than root data, it will traverse to the left, otherwise it will traverse to the right
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204164802.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204164802.png)
 
 
 3. if there is no existing data to compare, new data will be placed in where it traverse last
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204165407.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204165407.png)
 
 As I commented in the figure above, `newNode` will be settled down on where is `NULL`.
 
@@ -505,7 +505,7 @@ I know there are several duplication in the code, but how can I remove and effic
 
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231210003536.jpg)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231210003536.jpg)
 
 
 
@@ -515,7 +515,7 @@ The key is `double pointer`.
 `Double pointer` is the pointer points pointer‘s box. What does it mean :-) ?
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204182345.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204182345.png)
 
 
 Pointer is pointing the memory of integer value in above example, and I would say yellow box is for the memory for `pointer p`
@@ -524,7 +524,7 @@ Pointer p itself also needs memory location, it also has memory address.
 and `double pointer` which we are going to use to remove the redundancy will point out the yellow box like below.
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204182635.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204182635.png)
 
 
 Okay, you migh already know what the double pointer is, but how can we use this to make it efficient?
@@ -568,7 +568,7 @@ void insert_data(int data){
 Step 8 might be quite complicated, but if you remind double pointer is pointing the pointer’s memory, you can easily understand how it is possible.
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204184739.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204184739.png)
 
 
 `traverse_ptr` was pointing out `left` pointer’s memory address. In this example, `newNode` with 2 should be linked with `left` pointer in node 4.
@@ -648,7 +648,7 @@ Every algorithm has pros and cons, and `binary search tree` can not avoid this p
 Ideally, if we want to achieve O(Log2N) performance with `binary search tree`, well-balanced tree shape is required like multiple examples I shared above.
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204192159.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204192159.png)
 
 
 
@@ -669,7 +669,7 @@ int main(){
 What will happen?
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204192727.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204192727.png)
 
 
 How does it look like? It was `binary search tree`, but no difference from `linked list`, and it spends more memories for not in used `left` pointers.
@@ -690,7 +690,7 @@ It is literally rebalancing the data in the `binary search tree` to keep it as t
 In this post, we will create coverter from the `tree` to `array` and again to `tree`, so that unbalanced tree form will be maintained as well-balanced form.
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204194634.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204194634.png)
 
 
 Will this be efficient?
@@ -711,21 +711,21 @@ Let’s see multiple examples.
 > Example #1
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204202400.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204202400.png)
 
 
 
 > Example #2
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204202349.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204202349.png)
 
 
 
 >Example #3
 
 
-![](assets/images/bsearch_tree/Pasted%20image%2020231204202547.png)
+![](/assets/images/bsearch_tree/Pasted%20image%2020231204202547.png)
 
 
 If you see the result carefully, you will realize that output is already in ordered.
