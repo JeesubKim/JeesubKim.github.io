@@ -20,7 +20,7 @@ Fig.2 Real tree vs the `tree` data structure in computer science
 Today, we will talk about what the `Tree` is in computer science with definition, terms and implementation. 
 
 ## 1.1 Terms
-- Node | Vertex: Each item, circles in the figure
+- Node / Vertex: Each item, circles in the figure
 - Edge: Connected line between Node and Node
 - Root Node: Top most node, Acestor of every node
 - Leaf Node: Nodes which don’t have child node, terminal node
@@ -89,7 +89,7 @@ We can note down the basic concept of the tree what we are trying to implement f
 ```
 1. Data should be filled out from the root
 2. insert_data function will just see `current` node if `root` is not empty
-3. Position (Left || Right) should be delivered as one of parameters
+3. Position (Left or Right) should be delivered as one of parameters
 ```
 
 Let’s go through the first requirement.
@@ -138,7 +138,7 @@ Above code is literally working as requirement required, but still requirement i
 Let’s move on to the last requirement and see if some clarification is needed.
 
 
-> 3. Position (Left || Right) should be delivered as one of parameters
+> 3. Position (Left or Right) should be delivered as one of parameters
 
 
 Position information is supposed to be provided, so that `insert_data` function should follow where, left or right, the user of this function wants to insert.
@@ -177,8 +177,8 @@ So far, everything seems to be good except for the second requirement.
 Let’s revise the requirement to make it clear.
 
 
-> ~~2. insert_data function will just see `current` node if `root` is not empty~~
-> 2. `insert_data` function will refer to `current` node info and assign `newNode` to proper location with the `position` information from the following requirement
+> 2. ~~insert_data function will just see `current` node if `root` is not empty~~
+`insert_data` function will refer to `current` node info and assign `newNode` to proper location with the `position` information from the following requirement
 
 
 we can simply describe how the written code works.
