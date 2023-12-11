@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 
 # Site Settings
 locale                   : "en-US"
-title                    : "JLog"
+title                    : "Log"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Jeesub Kim"
@@ -104,15 +104,12 @@ analytics:
 
 # Site Author
 author:
-  name             : "Jeesub"
+  name             : "Jeesub Kim"
   avatar           : "/assets/images/avatar/jeesub.webp"
-  bio              : "I am an **Full Stack / Cellular Wireless Communication** S/W Engineer"
-  location         : "Greater Seattle"
+  bio              : "I am an **Full Stack \n & Cellular Wireless Communication** \nS/W Engineer"
+  location         : "Greater Seattle Area"
   email            : "jays.kim@hotmail.com"
   links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:jays.kim@hotmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       url: "https://jeesubkim.github.io"
