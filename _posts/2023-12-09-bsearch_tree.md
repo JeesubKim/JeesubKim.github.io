@@ -1,6 +1,6 @@
 # 1. Introduction of Tree
 
-Tree is one of basic concepts of data structure, which is very commonly used in computer science. With tree, we were able to implement ooo easily. 
+Tree is one of basic concepts of data structure, which is very commonly used in computer science. With tree, we were able to implement `File system`, `Database indexing`, `Pattern matching for the strings`, `Auto completion`, `Network routing` and `game development` easily. 
 However, why it’s called `Tree`?
 It’s literally looking tree, but up-side down one.
 Let’s imagine how `Tree` looks like.
