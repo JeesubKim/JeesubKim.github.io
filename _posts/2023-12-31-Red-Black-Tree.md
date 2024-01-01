@@ -405,6 +405,7 @@ Which means `balance is broken`, when we can easily reach a conclusion that tree
 			-  Parent —> RED
 			-  Sibling —> BLACK
 		-  RotateLeft( Parent )
+
 ![](/assets/images/redblack_tree/Pasted%20image%2020231230133956.png)
 
 
@@ -419,6 +420,7 @@ Which means `balance is broken`, when we can easily reach a conclusion that tree
 		-  Sibling —> RED
 		-  Target node —> RED ( This is not required to implement as it will be anyway removed)
 		-  Parent —> BLACK
+
 ![](/assets/images/redblack_tree/Pasted%20image%2020231230205024.png)
 
 - Rule#4: Closest nephew is RED
@@ -435,6 +437,7 @@ Which means `balance is broken`, when we can easily reach a conclusion that tree
 			- Sibling —> Inherit color of its parent
 			- Farest nephew —> BLACK
 		- RotateLeft( parent )
+		
 ![](/assets/images/redblack_tree/Pasted%20image%2020231230211619.png)
 
 *White Node in the figure means inheritance of color
