@@ -73,9 +73,9 @@ google:
   search_engine_id       : # YOUR_SEARCH_ENGINE_ID
   instant_search         : # false (default), true
 # SEO Related
-google_site_verification :
+google_site_verification : "dUVGlH7G9yYsfqxyGF8XfdOKpKY4K4ItYM98yKdtoB4"
 bing_site_verification   :
-naver_site_verification  :
+naver_site_verification  : "da9877f026b9a52c7c17f786d48b0f920e2dc129"
 yandex_site_verification :
 baidu_site_verification  :
 
@@ -106,7 +106,7 @@ analytics:
 author:
   name             : "Jeesub Kim"
   avatar           : "/assets/images/avatar/jeesub.webp"
-  bio              : "**Full Stack \n & Cellular Wireless Comm.** \nS/W Engineer"
+  bio              : "**Full Stack \n & Cellular Wireless Comm.** \n S/W Engineer"
   location         : "Greater Seattle Area"
   email            : "jays.kim@hotmail.com"
   links:
