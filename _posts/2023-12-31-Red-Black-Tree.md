@@ -46,10 +46,18 @@ What is `nil node`?
 
 
 Let’s look at the tree below.
+
 ![](/assets/images/redblack_tree/Pasted%20image%2020231230112215.png)
 
+
+
+
 Above is wel-balanced tree and we can see all the route from root to `nil node` has same number of black nodes.
+
 ![](/assets/images/redblack_tree/Pasted%20image%2020231230113629.png)
+
+
+
 Look at the figure above. Every path from `root` to `nil` has 3 Black nodes including `nil node` .
 
 Keep in mind and let’s go through how insert works first!
@@ -59,6 +67,7 @@ Keep in mind and let’s go through how insert works first!
 
 - Rule#1 `root `node is always `Black`
 - Rule#2 `new node` is always `Red`
+
 ![](/assets/images/redblack_tree/Pasted%20image%2020231208200920.png)
 
 
@@ -66,22 +75,27 @@ Keep in mind and let’s go through how insert works first!
 	- `parent` node’s color will be turned to `black`
 	- `grand parent` will be switched to `red`
 	- `uncle` will be changed to `black`
+
 ![](/assets/images/redblack_tree/Pasted%20image%2020231209004935.png)
 
 - Rule#4 If `parent node` is `red`, rotate the tree and flip the colors
 	- Rule#4.1 Flip the colors
 		- `parent` node’s color will be switched to `black`
 		- `grand parent` ‘s color will be switched to `red` as it will be always `black` due to given rules.
-		![](/assets/images/redblack_tree/Pasted%20image%2020231208201724.png)
+
+![](/assets/images/redblack_tree/Pasted%20image%2020231208201724.png)
 		
 	- Rule#4.2 Rotate the tree
 		- Rotate the tree based on the `경사도` of the tree
 			- R-R
 				- Rotate the tree to the left, which means, pe changed.hgrand parent  will be the left child of `parent`
-				![](/assets/images/redblack_tree/Pasted%20image%2020231208202450.png)
+
+![](/assets/images/redblack_tree/Pasted%20image%2020231208202450.png)
+			
 			- L-L
 				- Rotate the tree to the right.
-				![](/assets/images/redblack_tree/Pasted%20image%2020231209010400.png)
+
+![](/assets/images/redblack_tree/Pasted%20image%2020231209010400.png)
 				
 		
 These 4 rules + common rule are all of the insert rule.
@@ -437,7 +451,7 @@ Which means `balance is broken`, when we can easily reach a conclusion that tree
 			- Sibling —> Inherit color of its parent
 			- Farest nephew —> BLACK
 		- RotateLeft( parent )
-		
+
 ![](/assets/images/redblack_tree/Pasted%20image%2020231230211619.png)
 
 *White Node in the figure means inheritance of color
