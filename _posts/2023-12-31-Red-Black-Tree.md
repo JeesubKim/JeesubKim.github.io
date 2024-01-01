@@ -1070,5 +1070,7 @@ Let’s deep dive in `generic` linked list next time, and think how we can imple
 See you soon,
 
 Happy coding!
+
 Regards,
+
 Jeesub
