@@ -7,8 +7,13 @@ author_profile: true
 
 # About
 
-![](/assets/images/avatar/face.png)
-> Jeesub Kim (jays.kim@hotmail.com), I am an Full Stack / Cellular Wireless Communication S/W Engineer @Greater Seattle Area
+![](/assets/images/avatar/face.png) {: .align-center width="50%" height="50%"}
+
+- Name: Jeesub Kim 
+- Email: jays.kim@hotmail.com
+- Location: Greater Seattle Area
+
+I am a `Full Stack` / `Cellular Wireless Communication` `S/W Engineer`
 
 ## Experience
 
