@@ -7,7 +7,7 @@ author_profile: true
 
 # About
 
-![](/assets/images/avatar/face.png){: .align-center}{: width="10%" height="10%"}
+![](/assets/images/avatar/face.png){: .align-right}{: width="10%" height="10%"}
 
 - Name: Jeesub Kim 
 - Email: jays.kim@hotmail.com
