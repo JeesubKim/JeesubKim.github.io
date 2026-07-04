@@ -21,7 +21,7 @@ I am a `Full Stack` / `Cellular Wireless Communication` `S/W Engineer`
 - 26-Current : `Applied AI`
 : RL
 
-- 25-26 (1+ years): `Facebook Profile core identity development`
+- 25-26 (1+ years): `Facebook Profile Core Identity`
 : Metric driven feature development via A/B testing
 : Animated profile picture
 : Profile directory
