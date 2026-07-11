@@ -1,0 +1,870 @@
+---
+layout: null
+permalink: /projects/ascii-font-map/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Analyze ASCII character density by font and generate a custom ASCII ramp." />
+  <title>ASCII Font Analyzer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link id="google-font-link"
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #0866ff;
+      --blue-hover: #075ce5;
+      --blue-soft: #e7f3ff;
+      --bg: #f0f2f5;
+      --surface: #ffffff;
+      --surface-soft: #f7f8fa;
+      --text: #1c1e21;
+      --muted: #65676b;
+      --border: #dfe3e8;
+      --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    button,
+    select,
+    input {
+      font: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 750;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: white;
+      background: var(--blue);
+      font-family: "Roboto Mono", monospace;
+      font-size: 17px;
+      box-shadow: 0 4px 10px rgba(8, 102, 255, 0.24);
+    }
+
+    .topbar-note {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 32px auto 56px;
+    }
+
+    .hero {
+      margin-bottom: 24px;
+      padding: 30px;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at top right, rgba(8, 102, 255, 0.16), transparent 38%),
+        linear-gradient(135deg, #ffffff, #f8fbff);
+      border: 1px solid rgba(8, 102, 255, 0.12);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    h1 {
+      margin: 9px 0 10px;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -0.045em;
+    }
+
+    .hero p {
+      max-width: 750px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 330px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .controls {
+      position: sticky;
+      top: 84px;
+      padding: 20px;
+    }
+
+    .card-title {
+      margin: 0 0 4px;
+      font-size: 19px;
+      letter-spacing: -0.02em;
+    }
+
+    .card-description {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .control {
+      width: 100%;
+      min-height: 42px;
+      padding: 9px 12px;
+      color: var(--text);
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+    }
+
+    .control:focus {
+      background: white;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(8, 102, 255, 0.13);
+    }
+
+    .range-row {
+      display: grid;
+      grid-template-columns: 1fr 56px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--blue);
+    }
+
+    .value-box {
+      padding: 7px 8px;
+      text-align: center;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 12px 0;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .check-row input {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--blue);
+    }
+
+    .button {
+      width: 100%;
+      min-height: 44px;
+      border: 0;
+      border-radius: 9px;
+      color: white;
+      background: var(--blue);
+      font-weight: 750;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    .button:hover {
+      background: var(--blue-hover);
+    }
+
+    .button:active {
+      transform: scale(0.985);
+    }
+
+    .status {
+      min-height: 21px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .content {
+      display: grid;
+      gap: 20px;
+    }
+
+    .section {
+      padding: 22px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .section h2 {
+      margin: 0 0 4px;
+      font-size: 20px;
+      letter-spacing: -0.025em;
+    }
+
+    .section-subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .copy-button {
+      padding: 8px 12px;
+      border: 1px solid #b8cef7;
+      border-radius: 8px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .ramp {
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      padding: 18px;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 11px;
+      font-family: "Roboto Mono", monospace;
+      font-size: 25px;
+      white-space: pre;
+      letter-spacing: 0.06em;
+    }
+
+    .character-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(82px, 1fr));
+      gap: 10px;
+    }
+
+    .character-card {
+      padding: 12px 8px;
+      text-align: center;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .character-symbol {
+      min-height: 44px;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .character-score {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .meter {
+      height: 5px;
+      margin-top: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e3e6ea;
+    }
+
+    .meter > span {
+      display: block;
+      height: 100%;
+      background: var(--blue);
+      border-radius: inherit;
+    }
+
+    .preview-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .preview-panel {
+      min-height: 270px;
+      padding: 14px;
+      overflow: auto;
+      border-radius: 11px;
+      background: #111827;
+      color: #f3f4f6;
+    }
+
+    .preview-panel pre {
+      margin: 0;
+      font-size: 10px;
+      line-height: 0.86;
+      letter-spacing: 0;
+      white-space: pre;
+    }
+
+    .drop-zone {
+      min-height: 270px;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      text-align: center;
+      border: 2px dashed #cbd2dc;
+      border-radius: 11px;
+      background: var(--surface-soft);
+      cursor: pointer;
+    }
+
+    .drop-zone.dragging {
+      border-color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .drop-zone strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .drop-zone span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    #image-input,
+    #measurement-canvas,
+    #image-canvas {
+      display: none;
+    }
+
+    @media (max-width: 860px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        position: static;
+      }
+
+      .preview-shell {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .topbar {
+        padding: 0 16px;
+      }
+
+      .topbar-note {
+        display: none;
+      }
+
+      .page {
+        width: min(100% - 20px, 1180px);
+        margin-top: 18px;
+      }
+
+      .hero,
+      .section,
+      .controls {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">Aa</div>
+      <span>ASCII Font Analyzer</span>
+    </div>
+    <div class="topbar-note">Font-aware character density explorer</div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">Interactive Project</div>
+      <h1>Build the perfect ASCII ramp for any font.</h1>
+      <p>
+        Every font renders characters with a different visual density.
+        This tool draws each character into a canvas, measures its ink coverage,
+        sorts the result, and creates a custom ASCII brightness ramp.
+      </p>
+    </section>
+
+    <div class="layout">
+      <aside class="card controls">
+        <h2 class="card-title">Analyzer settings</h2>
+        <p class="card-description">
+          Change the font or rendering options, then analyze the character set.
+        </p>
+
+        <div class="field">
+          <label for="font-select">Google Font</label>
+          <select id="font-select" class="control">
+            <option value="Roboto Mono">Roboto Mono</option>
+            <option value="JetBrains Mono">JetBrains Mono</option>
+            <option value="Fira Code">Fira Code</option>
+            <option value="IBM Plex Mono">IBM Plex Mono</option>
+            <option value="Source Code Pro">Source Code Pro</option>
+            <option value="Space Mono">Space Mono</option>
+            <option value="Inconsolata">Inconsolata</option>
+            <option value="Noto Sans Mono">Noto Sans Mono</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="font-size">Font size</label>
+          <div class="range-row">
+            <input id="font-size" type="range" min="16" max="72" value="40" />
+            <div id="font-size-value" class="value-box">40</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="font-weight">Weight</label>
+          <select id="font-weight" class="control">
+            <option value="400">Regular 400</option>
+            <option value="500">Medium 500</option>
+            <option value="600">Semi Bold 600</option>
+            <option value="700">Bold 700</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="character-set">Characters</label>
+          <input
+            id="character-set"
+            class="control"
+            type="text"
+            value=" .,:;i1tfLCG08@"
+            spellcheck="false"
+          />
+        </div>
+
+        <label class="check-row">
+          <input id="invert-order" type="checkbox" />
+          Bright to dark order
+        </label>
+
+        <label class="check-row">
+          <input id="include-printable" type="checkbox" />
+          Use all printable ASCII
+        </label>
+
+        <button id="analyze-button" class="button">Analyze characters</button>
+        <div id="status" class="status" aria-live="polite"></div>
+      </aside>
+
+      <section class="content">
+        <article class="card section">
+          <div class="section-header">
+            <div>
+              <h2>ASCII ramp</h2>
+              <p class="section-subtitle">Sorted by measured character density.</p>
+            </div>
+            <button id="copy-button" class="copy-button">Copy</button>
+          </div>
+          <div id="ramp" class="ramp"> .,:;1234567890!@#$%^&*()-=_+qwertyuiop[]\asdfghjkl;'zxcvbnm,./QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM<>?`~</div>
+        </article>
+
+        <article class="card section">
+          <div class="section-header">
+            <div>
+              <h2>Character density map</h2>
+              <p class="section-subtitle">Higher scores contain more rendered ink.</p>
+            </div>
+          </div>
+          <div id="character-grid" class="character-grid"></div>
+        </article>
+
+        <article class="card section">
+          <div class="section-header">
+            <div>
+              <h2>Image preview</h2>
+              <p class="section-subtitle">Upload an image to render it using the generated ramp.</p>
+            </div>
+          </div>
+
+          <div class="preview-shell">
+            <label id="drop-zone" class="drop-zone" for="image-input">
+              <div>
+                <strong>Choose or drop an image</strong>
+                <span>PNG, JPEG, or WebP</span>
+              </div>
+            </label>
+
+            <div class="preview-panel">
+              <pre id="ascii-preview">Upload an image to preview ASCII output.</pre>
+            </div>
+          </div>
+
+          <input id="image-input" type="file" accept="image/png,image/jpeg,image/webp" />
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <canvas id="measurement-canvas" width="96" height="96"></canvas>
+  <canvas id="image-canvas"></canvas>
+
+  <script>
+    const GOOGLE_FONTS = {
+      "Roboto Mono": "Roboto+Mono",
+      "JetBrains Mono": "JetBrains+Mono",
+      "Fira Code": "Fira+Code",
+      "IBM Plex Mono": "IBM+Plex+Mono",
+      "Source Code Pro": "Source+Code+Pro",
+      "Space Mono": "Space+Mono",
+      "Inconsolata": "Inconsolata",
+      "Noto Sans Mono": "Noto+Sans+Mono"
+    };
+
+    const state = {
+      ramp: [],
+      uploadedImage: null
+    };
+
+    const elements = {
+      fontSelect: document.getElementById("font-select"),
+      fontSize: document.getElementById("font-size"),
+      fontSizeValue: document.getElementById("font-size-value"),
+      fontWeight: document.getElementById("font-weight"),
+      characterSet: document.getElementById("character-set"),
+      invertOrder: document.getElementById("invert-order"),
+      includePrintable: document.getElementById("include-printable"),
+      analyzeButton: document.getElementById("analyze-button"),
+      copyButton: document.getElementById("copy-button"),
+      status: document.getElementById("status"),
+      ramp: document.getElementById("ramp"),
+      characterGrid: document.getElementById("character-grid"),
+      imageInput: document.getElementById("image-input"),
+      dropZone: document.getElementById("drop-zone"),
+      asciiPreview: document.getElementById("ascii-preview"),
+      measurementCanvas: document.getElementById("measurement-canvas"),
+      imageCanvas: document.getElementById("image-canvas")
+    };
+
+    function printableAscii() {
+      let result = "";
+      for (let code = 32; code <= 126; code++) {
+        result += String.fromCharCode(code);
+      }
+      return result;
+    }
+
+    function uniqueCharacters(text) {
+      return [...new Set([...text])];
+    }
+
+    async function loadSelectedFont() {
+      const fontName = elements.fontSelect.value;
+      const weight = elements.fontWeight.value;
+      const family = GOOGLE_FONTS[fontName];
+      const link = document.getElementById("google-font-link");
+
+      link.href =
+        `https://fonts.googleapis.com/css2?family=${family}:wght@${weight}&display=swap`;
+
+      await new Promise((resolve) => {
+        link.onload = resolve;
+        setTimeout(resolve, 1200);
+      });
+
+      await document.fonts.load(
+        `${weight} ${elements.fontSize.value}px "${fontName}"`
+      );
+    }
+
+    function measureCharacter(character, fontName, fontSize, fontWeight) {
+      const canvas = elements.measurementCanvas;
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.font = `${fontWeight} ${fontSize}px "${fontName}", monospace`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = "#fff";
+      ctx.fillText(character, canvas.width / 2, canvas.height / 2);
+
+      const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+
+      let total = 0;
+      for (let i = 0; i < pixels.length; i += 4) {
+        total += pixels[i] / 255;
+      }
+
+      return total / (canvas.width * canvas.height);
+    }
+
+    function displayCharacter(character) {
+      return character === " " ? "␠" : character;
+    }
+
+    function renderResults(results) {
+      state.ramp = results.map((item) => item.character);
+
+      elements.ramp.textContent = state.ramp.join("");
+      elements.ramp.style.fontFamily =
+        `"${elements.fontSelect.value}", monospace`;
+
+      elements.characterGrid.innerHTML = "";
+
+      const maxScore = Math.max(...results.map((item) => item.score), 0.0001);
+
+      for (const item of results) {
+        const card = document.createElement("div");
+        card.className = "character-card";
+
+        const symbol = document.createElement("div");
+        symbol.className = "character-symbol";
+        symbol.style.fontFamily = `"${elements.fontSelect.value}", monospace`;
+        symbol.style.fontWeight = elements.fontWeight.value;
+        symbol.textContent = displayCharacter(item.character);
+
+        const score = document.createElement("div");
+        score.className = "character-score";
+        score.textContent = item.score.toFixed(4);
+
+        const meter = document.createElement("div");
+        meter.className = "meter";
+
+        const fill = document.createElement("span");
+        fill.style.width = `${(item.score / maxScore) * 100}%`;
+
+        meter.appendChild(fill);
+        card.append(symbol, score, meter);
+        elements.characterGrid.appendChild(card);
+      }
+
+      if (state.uploadedImage) {
+        renderAsciiImage(state.uploadedImage);
+      }
+    }
+
+    async function analyzeCharacters() {
+      elements.status.textContent = "Loading font and measuring characters…";
+      elements.analyzeButton.disabled = true;
+
+      try {
+        await loadSelectedFont();
+
+        const fontName = elements.fontSelect.value;
+        const fontSize = Number(elements.fontSize.value);
+        const fontWeight = elements.fontWeight.value;
+        const source = elements.includePrintable.checked
+          ? printableAscii()
+          : elements.characterSet.value;
+
+        const characters = uniqueCharacters(source);
+
+        if (characters.length === 0) {
+          throw new Error("Enter at least one character.");
+        }
+
+        const results = characters.map((character) => ({
+          character,
+          score: measureCharacter(character, fontName, fontSize, fontWeight)
+        }));
+
+        results.sort((a, b) =>
+          elements.invertOrder.checked
+            ? a.score - b.score
+            : b.score - a.score
+        );
+
+        renderResults(results);
+        elements.status.textContent = `Analyzed ${results.length} characters.`;
+      } catch (error) {
+        console.error(error);
+        elements.status.textContent = error.message || "Unable to analyze the font.";
+      } finally {
+        elements.analyzeButton.disabled = false;
+      }
+    }
+
+    function brightness(r, g, b) {
+      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    }
+
+    function renderAsciiImage(image) {
+      if (state.ramp.length === 0) return;
+
+      const canvas = elements.imageCanvas;
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+
+      const maxColumns = 82;
+      const scale = Math.min(1, maxColumns / image.naturalWidth);
+      const width = Math.max(1, Math.floor(image.naturalWidth * scale));
+      const height = Math.max(
+        1,
+        Math.floor(image.naturalHeight * scale * 0.48)
+      );
+
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(image, 0, 0, width, height);
+
+      const data = ctx.getImageData(0, 0, width, height).data;
+      let output = "";
+
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          const index = (y * width + x) * 4;
+          const value = brightness(
+            data[index],
+            data[index + 1],
+            data[index + 2]
+          );
+
+          const rampIndex = Math.min(
+            state.ramp.length - 1,
+            Math.floor((value / 255) * state.ramp.length)
+          );
+
+          output += state.ramp[rampIndex];
+        }
+        output += "\n";
+      }
+
+      elements.asciiPreview.textContent = output;
+      elements.asciiPreview.style.fontFamily =
+        `"${elements.fontSelect.value}", monospace`;
+    }
+
+    function loadImageFile(file) {
+      if (!file || !file.type.startsWith("image/")) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const image = new Image();
+        image.onload = () => {
+          state.uploadedImage = image;
+          renderAsciiImage(image);
+        };
+        image.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    elements.fontSize.addEventListener("input", () => {
+      elements.fontSizeValue.textContent = elements.fontSize.value;
+    });
+
+    elements.includePrintable.addEventListener("change", () => {
+      elements.characterSet.disabled = elements.includePrintable.checked;
+    });
+
+    elements.analyzeButton.addEventListener("click", analyzeCharacters);
+
+    elements.copyButton.addEventListener("click", async () => {
+      await navigator.clipboard.writeText(state.ramp.join(""));
+      const original = elements.copyButton.textContent;
+      elements.copyButton.textContent = "Copied";
+      setTimeout(() => {
+        elements.copyButton.textContent = original;
+      }, 1000);
+    });
+
+    elements.imageInput.addEventListener("change", (event) => {
+      loadImageFile(event.target.files[0]);
+    });
+
+    ["dragenter", "dragover"].forEach((eventName) => {
+      elements.dropZone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        elements.dropZone.classList.add("dragging");
+      });
+    });
+
+    ["dragleave", "drop"].forEach((eventName) => {
+      elements.dropZone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        elements.dropZone.classList.remove("dragging");
+      });
+    });
+
+    elements.dropZone.addEventListener("drop", (event) => {
+      loadImageFile(event.dataTransfer.files[0]);
+    });
+
+    analyzeCharacters();
+  </script>
+</body>
+</html>
